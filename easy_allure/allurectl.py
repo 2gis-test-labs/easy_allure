@@ -17,6 +17,6 @@ allure_executables = {
     }
 }
 
-def get_allure_executable():
+def get_allure_executable() -> str:
     executable = allure_executables[platform.system()][platform.machine()]
     return pkg_resources.resource_filename('easy_allure', executable)

@@ -2,18 +2,14 @@ import argparse
 import os
 import sys
 
-import pkg_resources
-
 from .helpers import run_cmd
+from .allurectl import get_allure_executable
 from .exceptions import ScriptException
-
-
-ALLURECTL = pkg_resources.resource_filename('easy_allure', 'lib/allurectl')
 
 
 def create_launch(launch_name: str) -> str:
     cmd = '{} launch create --launch-name {} ' \
-          '--no-header --format ID | tail -n1'.format(ALLURECTL, launch_name)
+          '--no-header --format ID | tail -n1'.format(get_allure_executable(), launch_name)
     try:
         launch_id, _ = run_cmd(cmd)
         launch_id = launch_id.strip()
@@ -25,7 +21,7 @@ def create_launch(launch_name: str) -> str:
 
 def upload_launch(reports_path: str, launch_id: str) -> None:
     cmd = '{} upload {} --launch-id {}' \
-          .format(ALLURECTL, reports_path, launch_id)
+          .format(get_allure_executable(), reports_path, launch_id)
     try:
         run_cmd(cmd)
     except RuntimeError as err:
@@ -34,7 +30,7 @@ def upload_launch(reports_path: str, launch_id: str) -> None:
 
 
 def close_launch(launch_id: str) -> None:
-    cmd = '{} launch close {}'.format(ALLURECTL, launch_id)
+    cmd = '{} launch close {}'.format(get_allure_executable(), launch_id)
     try:
         run_cmd(cmd)
     except RuntimeError as err:
