@@ -2,7 +2,7 @@ import subprocess
 from typing import Tuple
 
 
-def run_cmd(cmd: str, timeout: int = 30) -> Tuple[str, str]:
+def run_cmd(cmd: str, timeout: int = 60) -> Tuple[str, str]:
     proc = subprocess.Popen(cmd,
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
