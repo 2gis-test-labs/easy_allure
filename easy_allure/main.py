@@ -45,7 +45,7 @@ def close_launch(launch_id: str) -> None:
 def send_to_testops(parsed_args: argparse.Namespace) -> int:
     launch_id = create_launch(parsed_args.launch_name)
     upload_launch(parsed_args.reports_path, launch_id)
-    close_launch(launch_id)
+    # close_launch(launch_id)
 
     allure_endpoint = os.environ.get('ALLURE_ENDPOINT')
     print('Test run was successfully pushed to {}/launch/{}'
