@@ -1,14 +1,16 @@
 import argparse
+import os
 from typing import Dict
 
-from .helpers import run_cmd
 from .allurectl import get_allure_executable
 from .exceptions import ScriptException
+from .helpers import run_cmd
 
 
 def create_launch(launch_name: str) -> str:
     cmd = '{} launch create --launch-name {} ' \
-          '--no-header --format ID | tail -n1'.format(get_allure_executable(), launch_name)
+          '--no-header --format ID | tail -n1' \
+          .format(get_allure_executable(), launch_name)
     try:
         launch_id, _ = run_cmd(cmd)
         launch_id = launch_id.strip()

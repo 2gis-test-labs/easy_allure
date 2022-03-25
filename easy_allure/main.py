@@ -1,8 +1,9 @@
 import argparse
 import sys
 
-from .testops import get_available_actions
 from . import __version__
+from .testops import get_available_actions
+
 
 def main():
     print('Running easy_allure v{}'.format(__version__))

@@ -5,7 +5,6 @@ import setuptools
 
 import easy_allure
 
-
 setuptools.setup(
     name="easy_allure",
     description="Library for allure testops",

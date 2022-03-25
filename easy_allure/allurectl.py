@@ -1,6 +1,6 @@
-import pkg_resources
 import platform
 
+import pkg_resources
 
 allure_executables = {
     'Darwin': {
@@ -16,6 +16,7 @@ allure_executables = {
         'arm': 'lib/allurectl_windows_arm64.exe',
     }
 }
+
 
 def get_allure_executable() -> str:
     executable = allure_executables[platform.system()][platform.machine()]
