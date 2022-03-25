@@ -42,7 +42,7 @@ def close_launch(launch_id: str) -> None:
         raise ScriptException(errMessage)
 
 
-def send_to_testops(parsed_args) -> int:
+def send_to_testops(parsed_args: argparse.Namespace) -> int:
     launch_id = create_launch(parsed_args.launch_name)
     upload_launch(parsed_args.reports_path, launch_id)
     close_launch(launch_id)
