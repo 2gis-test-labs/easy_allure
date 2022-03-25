@@ -3,12 +3,15 @@
 
 import setuptools
 
+import easy_allure
+
+
 setuptools.setup(
     name="easy_allure",
     description="Library for allure testops",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    version="1.0.0",
+    version=easy_allure.__version__,
     license="Apache-2.0",
     author="2GIS Test Labs",
     url="https://github.com/2gis-test-labs/easy_allure",
