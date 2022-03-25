@@ -11,6 +11,7 @@ setuptools.setup(
     version="1.0.0",
     license="Apache-2.0",
     author="2GIS Test Labs",
+    url="https://github.com/2gis-test-labs/easy_allure",
     author_email="test-labs@2gis.ru",
     python_requires=">=3.7",
     packages=['easy_allure'],

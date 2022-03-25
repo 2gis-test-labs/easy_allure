@@ -3,7 +3,7 @@ import os
 import sys
 
 import pkg_resources
-from helpers import run_cmd
+from .helpers import run_cmd
 
 
 def send_to_testops(launch_name: str, reports_path: str) -> int:
