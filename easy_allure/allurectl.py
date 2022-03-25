@@ -20,4 +20,8 @@ allure_executables = {
 
 def get_allure_executable() -> str:
     executable = allure_executables[platform.system()][platform.machine()]
-    return pkg_resources.resource_filename('easy_allure', executable)
+    try:
+        executable = pkg_resources.resource_filename('easy_allure', executable)
+    except Exception as err:
+        raise OSError('Failed to find executable for your platform')
+    return executable

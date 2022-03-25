@@ -13,10 +13,14 @@ def create_launch(launch_name: str) -> str:
           .format(get_allure_executable(), launch_name)
     try:
         launch_id, _ = run_cmd(cmd)
-        launch_id = launch_id.strip()
     except RuntimeError as err:
         errMessage = 'Failed to create launch: {}'.format(err)
         raise ScriptException(errMessage)
+
+    launch_id = launch_id.strip()
+    if not launch_id:
+        raise ScriptException('Failed to receive launch id from allurectl')
+
     return launch_id
 
 
