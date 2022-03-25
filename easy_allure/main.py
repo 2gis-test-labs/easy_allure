@@ -3,34 +3,49 @@ import os
 import sys
 
 import pkg_resources
+
 from .helpers import run_cmd
+from .exceptions import ScriptException
 
 
-def send_to_testops(launch_name: str, reports_path: str) -> int:
-    allurectl = pkg_resources.resource_filename('easy_allure', 'lib/allurectl')
+ALLURECTL = pkg_resources.resource_filename('easy_allure', 'lib/allurectl')
+
+
+def create_launch(launch_name: str) -> str:
     cmd = '{} launch create --launch-name {} ' \
-          '--no-header --format ID | tail -n1'.format(allurectl, launch_name)
+          '--no-header --format ID | tail -n1'.format(ALLURECTL, launch_name)
     try:
         launch_id, _ = run_cmd(cmd)
         launch_id = launch_id.strip()
     except RuntimeError as err:
-        print('Failed to create launch: {}'.format(err))
-        return 1
+        errMessage = 'Failed to create launch: {}'.format(err)
+        raise ScriptException(errMessage)
+    return launch_id
 
+
+def upload_launch(reports_path: str, launch_id: str) -> None:
     cmd = '{} upload {} --launch-id {}' \
-          .format(allurectl, reports_path, launch_id)
+          .format(ALLURECTL, reports_path, launch_id)
     try:
         run_cmd(cmd)
     except RuntimeError as err:
-        print('Failed to upload launch: {}'.format(err))
-        return 1
+        errMessage = 'Failed to upload launch: {}'.format(err)
+        raise ScriptException(errMessage)
 
-    cmd = '{} launch close {}'.format(allurectl, launch_id)
+
+def close_launch(launch_id: str) -> None:
+    cmd = '{} launch close {}'.format(ALLURECTL, launch_id)
     try:
         run_cmd(cmd)
     except RuntimeError as err:
-        print('Failed to close launch: {}'.format(err))
-        return 1
+        errMessage = 'Failed to close launch: {}'.format(err)
+        raise ScriptException(errMessage)
+
+
+def send_to_testops(parsed_args) -> int:
+    launch_id = create_launch(parsed_args.launch_name)
+    upload_launch(parsed_args.reports_path, launch_id)
+    close_launch(launch_id)
 
     allure_endpoint = os.environ.get('ALLURE_ENDPOINT')
     print('Test run was successfully pushed to {}/launch/{}'
@@ -54,12 +69,13 @@ def main():
     if parsed_args.action not in actions.keys():
         print('<{}> action is not supported, plase select from {}'
               .format(parsed_args.action, actions.keys()))
-        sys.exit(1)
+        sys.exit(2)
 
-    sys.exit(actions[parsed_args.action](
-        launch_name=parsed_args.launch_name,
-        reports_path=parsed_args.reports_path
-    ))
+    try:
+        sys.exit(actions[parsed_args.action](parsed_args))
+    except Exception as err:
+        print(err)
+        sys.exit(1)
 
 
 if __name__ == '__main__':
