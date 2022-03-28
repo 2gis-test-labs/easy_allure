@@ -26,7 +26,7 @@ setuptools.setup(
             'easy_allure = easy_allure.main:main'
         ]
     },
-    scripts=[pkg_resources.resource_filename('easy_allure', '/bin/allurectl')]
+    scripts=[pkg_resources.resource_filename('easy_allure', '/bin/allurectl')],
     package_data={'easy_allure': [
         'bin/*'
     ]},
