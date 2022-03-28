@@ -39,7 +39,7 @@ def download_allurectl() -> None:
     executable_name = get_allure_executable()
     file_url = 'https://github.com/allure-framework/allurectl/releases/download/{}/{}'\
                .format(ALLURECTL_VERSION, executable_name)
-    dest_file = './bin/{}'.format(executable_name)
+    dest_file = './easy_allure/bin/{}'.format(executable_name)
     download_file(file_url, dest_file)
 
 
