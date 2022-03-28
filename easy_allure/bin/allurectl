@@ -7,7 +7,8 @@ import pkg_resources
 from easy_allure.allurectl import get_allure_executable
 
 
-executable = get_allure_executable()
-command = [pkg_resources.resource_filename('easy_allure', '/bin/{}'.format(executable))]
-command.extend(sys.argv[1:])
-subprocess.call(command)
+def allurectl():
+    executable = get_allure_executable()
+    command = [pkg_resources.resource_filename('easy_allure', '/bin/{}'.format(executable))]
+    command.extend(sys.argv[1:])
+    subprocess.call(command)
