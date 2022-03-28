@@ -1,0 +1,10 @@
+#!/usr/bin/python3
+
+import sys
+import subprocess
+import pkg_resources
+
+
+command = [pkg_resources.resource_filename('easy_allure', '/lib/allurectl')]
+command.extend(sys.argv[1:])
+subprocess.call(command)

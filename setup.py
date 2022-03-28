@@ -25,7 +25,11 @@ setuptools.setup(
             'easy_allure = easy_allure.main:main'
         ]
     },
-    package_data={'easy_allure': ['lib/*']},
+    scripts=['easy_allure/allurectl'],
+    package_data={'easy_allure': [
+        'lib/*'
+        'allurectl'
+    ]},
     zip_safe=False,
     classifiers=[
         "License :: OSI Approved :: Apache Software License",

@@ -1,7 +1,8 @@
 import platform
 from urllib import request
+import os
 
-import pkg_resources
+from .helpers import run_cmd
 
 
 ALLURECTL_VERSION = '1.21.2'
@@ -24,9 +25,8 @@ allure_executables = {
 
 def get_allure_executable() -> str:
     try:
-        return 'allurectl_linux_amd64'
+        return 'allurectl_linux_arm64'
         executable = allure_executables[platform.system()][platform.machine()]
-        # executable = pkg_resources.resource_filename('easy_allure', executable)
     except Exception as err:
         raise OSError('Failed to find executable for your platform')
     return executable
@@ -38,3 +38,4 @@ def download_allurectl():
     print('downloading allurectl from {}'.format(download_link))
     download_path = './easy_allure/lib/allurectl'
     request.urlretrieve(download_link, download_path)
+    os.chmod(download_path, 0o755)
