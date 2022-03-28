@@ -25,10 +25,9 @@ setuptools.setup(
             'easy_allure = easy_allure.main:main'
         ]
     },
-    scripts=['easy_allure/allurectl'],
+    scripts=['easy_allure/bin/allurectl'],
     package_data={'easy_allure': [
-        'lib/*'
-        'allurectl'
+        'bin/*'
     ]},
     zip_safe=False,
     classifiers=[
