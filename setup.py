@@ -23,10 +23,10 @@ setuptools.setup(
     packages=['easy_allure'],
     entry_points={
         'console_scripts': [
-            'easy_allure = easy_allure.main:main'
+            'easy_allure = easy_allure.main:main',
+            'allurectl = easy_allure.bin.allurectl:allurectl'
         ]
     },
-    scripts=[pkg_resources.resource_filename('easy_allure', '/bin/allurectl')],
     package_data={'easy_allure': [
         'bin/*'
     ]},
