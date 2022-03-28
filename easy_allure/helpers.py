@@ -9,7 +9,6 @@ def run_cmd(cmd: str, timeout: int = 60) -> Tuple[str, str]:
                             universal_newlines=True,
                             shell=True)
     stdout, stderr = proc.communicate(timeout=timeout)
-
     if proc.returncode != 0:
         raise RuntimeError('Failed to run <{}>, got {}'.format(cmd, stderr))
     return stdout, stderr
