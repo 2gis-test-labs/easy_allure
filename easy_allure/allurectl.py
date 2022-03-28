@@ -5,7 +5,7 @@ import sys
 import subprocess
 import pkg_resources
 
-from .helpers import download_file
+from .helpers import download_file, r
 
 
 ALLURECTL_VERSION = '1.21.2'
@@ -39,8 +39,9 @@ def download_allurectl() -> None:
     executable_name = get_allure_executable()
     file_url = 'https://github.com/allure-framework/allurectl/releases/download/{}/{}'\
                .format(ALLURECTL_VERSION, executable_name)
-    root = pkg_resources.resource_filename('easy_allure', '')
-    dest_file = '{}/bin/{}'.format(root, executable_name)
+    
+    # root = pkg_resources.resource_filename('easy_allure', '')
+    dest_file = './bin/{}'.format(executable_name)
     download_file(file_url, dest_file)
 
 
