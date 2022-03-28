@@ -3,12 +3,11 @@
 
 import setuptools
 
-import pkg_resources
 import easy_allure
 from easy_allure.allurectl import download_allurectl
 
-download_allurectl()
 
+download_allurectl()
 setuptools.setup(
     name="easy_allure",
     description="Library for allure testops",
@@ -24,7 +23,7 @@ setuptools.setup(
     entry_points={
         'console_scripts': [
             'easy_allure = easy_allure.main:main',
-            'allurectl = easy_allure.bin.allurectl:allurectl'
+            'allurectl = easy_allure.allurectl:run_allurectl'
         ]
     },
     package_data={'easy_allure': [
