@@ -2,15 +2,14 @@ import argparse
 import os
 from typing import Dict
 
-from .allurectl import get_allure_executable
 from .exceptions import ScriptException
 from .helpers import run_cmd
 
 
 def create_launch(launch_name: str) -> str:
-    cmd = '{} launch create --launch-name {} ' \
+    cmd = 'allurectl launch create --launch-name {} ' \
           '--no-header --format ID | tail -n1' \
-          .format(get_allure_executable(), launch_name)
+          .format(launch_name)
     try:
         launch_id, _ = run_cmd(cmd)
     except RuntimeError as err:
@@ -25,8 +24,8 @@ def create_launch(launch_name: str) -> str:
 
 
 def upload_launch(reports_path: str, launch_id: str) -> None:
-    cmd = '{} upload {} --launch-id {}' \
-          .format(get_allure_executable(), reports_path, launch_id)
+    cmd = 'allurectl upload {} --launch-id {}' \
+          .format(reports_path, launch_id)
     try:
         run_cmd(cmd)
     except RuntimeError as err:
@@ -35,7 +34,7 @@ def upload_launch(reports_path: str, launch_id: str) -> None:
 
 
 def close_launch(launch_id: str) -> None:
-    cmd = '{} launch close {}'.format(get_allure_executable(), launch_id)
+    cmd = 'allurectl launch close {}'.format(launch_id)
     try:
         run_cmd(cmd)
     except RuntimeError as err:
