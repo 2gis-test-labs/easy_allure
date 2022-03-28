@@ -5,7 +5,7 @@ import sys
 import subprocess
 import pkg_resources
 
-from .helpers import download_file, r
+from .helpers import download_file
 
 
 ALLURECTL_VERSION = '1.21.2'
