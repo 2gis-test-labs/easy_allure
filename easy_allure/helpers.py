@@ -1,5 +1,5 @@
-import subprocess
 import os
+import subprocess
 from typing import Tuple
 from urllib import request
 
@@ -16,7 +16,8 @@ def run_cmd(cmd: str, timeout: int = 60) -> Tuple[str, str]:
     return stdout, stderr
 
 
-def download_file(file_url, dest_dir, dest_file_name, mode=0o755) -> None:
+def download_file(file_url: str, dest_dir: str, dest_file_name: str,
+                  mode: int = 0o755) -> None:
     if not os.path.exists(dest_dir):
         os.makedirs(dest_dir)
     full_path = os.path.join(dest_dir, dest_file_name)
