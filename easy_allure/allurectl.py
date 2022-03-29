@@ -27,7 +27,6 @@ allure_executables = {
 
 def get_allure_executable() -> str:
     try:
-        return 'allurectl_linux_amd64'
         executable = allure_executables[platform.system()][platform.machine()]
     except Exception:
         raise OSError('Failed to find executable for your platform')
