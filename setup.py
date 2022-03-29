@@ -6,7 +6,6 @@ import setuptools
 import easy_allure
 from easy_allure.allurectl import download_allurectl
 
-
 download_allurectl()
 setuptools.setup(
     name="easy_allure",
