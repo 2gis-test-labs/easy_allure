@@ -4,7 +4,7 @@ import sys
 
 import pkg_resources
 
-import helpers
+from .helpers import download_file
 
 
 ALLURECTL_VERSION = '1.21.2'
@@ -40,7 +40,7 @@ def download_allurectl() -> None:
                'releases/download/{}/{}'\
                .format(ALLURECTL_VERSION, executable_name)
     dest_dir = pkg_resources.resource_filename('easy_allure', '/bin/')
-    helpers.download_filedownload_file(file_url, dest_dir, executable_name)
+    download_file(file_url, dest_dir, executable_name)
 
 
 def run_allurectl() -> None:

@@ -2,8 +2,8 @@ import argparse
 import os
 from typing import Dict
 
-import exceptions
-import helpers
+from .exceptions import ScriptException
+from .helpers import run_cmd
 
 
 def create_launch(launch_name: str) -> str:
@@ -11,14 +11,14 @@ def create_launch(launch_name: str) -> str:
           '--no-header --format ID | tail -n1' \
           .format(launch_name)
     try:
-        launch_id, _ = helpers.run_cmd(cmd)
+        launch_id, _ = run_cmd(cmd)
     except RuntimeError as err:
         errMessage = 'Failed to create launch: {}'.format(err)
-        raise exceptions.ScriptException(errMessage)
+        raise ScriptException(errMessage)
 
     launch_id = launch_id.strip()
     if not launch_id:
-        raise exceptions.ScriptException('Failed to receive launch id from allurectl,'
+        raise ScriptException('Failed to receive launch id from allurectl,'
                                          'empty launch_id received from allurectl')
 
     return launch_id
@@ -28,19 +28,19 @@ def upload_launch(reports_path: str, launch_id: str) -> None:
     cmd = 'allurectl upload {} --launch-id {}' \
           .format(reports_path, launch_id)
     try:
-        helpers.run_cmd(cmd)
+        run_cmd(cmd)
     except RuntimeError as err:
         errMessage = 'Failed to upload launch: {}'.format(err)
-        raise exceptions.ScriptException(errMessage)
+        raise ScriptException(errMessage)
 
 
 def close_launch(launch_id: str) -> None:
     cmd = 'allurectl launch close {}'.format(launch_id)
     try:
-        helpers.run_cmd(cmd)
+        run_cmd(cmd)
     except RuntimeError as err:
         errMessage = 'Failed to close launch: {}'.format(err)
-        raise exceptions.ScriptException(errMessage)
+        raise ScriptException(errMessage)
 
 
 def send_to_testops(parsed_args: argparse.Namespace) -> int:

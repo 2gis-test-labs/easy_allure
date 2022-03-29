@@ -3,8 +3,9 @@
 
 import setuptools
 
-import easy_allure
+from easy_allure.main import __version__
 from easy_allure.allurectl import download_allurectl
+
 
 download_allurectl()
 setuptools.setup(
@@ -12,7 +13,7 @@ setuptools.setup(
     description="Library for allure testops",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    version=easy_allure.__version__,
+    version=__version__,
     license="Apache-2.0",
     author="2GIS Test Labs",
     url="https://github.com/2gis-test-labs/easy_allure",

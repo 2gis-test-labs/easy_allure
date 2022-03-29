@@ -1,11 +1,11 @@
 import argparse
 import sys
 
-import testops
-import allurectl
+from .testops import get_available_actions
+from .allurectl import ALLURECTL_VERSION
 
 
-__version__ = '1.0_{}'.format(allurectl.ALLURECTL_VERSION)
+__version__ = '1.0_{}'.format(ALLURECTL_VERSION)
 
 
 def main():
@@ -18,7 +18,7 @@ def main():
                         default='default_launch_name')
     parsed_args = parser.parse_args()
 
-    actions = testops.get_available_actions()
+    actions = get_available_actions()
     if parsed_args.action not in actions.keys():
         print('<{}> action is not supported, plase select from {}'
               .format(parsed_args.action, actions.keys()))
