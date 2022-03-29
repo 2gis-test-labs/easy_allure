@@ -3,14 +3,17 @@
 
 import setuptools
 
-import easy_allure
+from easy_allure.main import __version__
+from easy_allure.allurectl import download_allurectl
 
+
+download_allurectl()
 setuptools.setup(
     name="easy_allure",
     description="Library for allure testops",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    version=easy_allure.__version__,
+    version=__version__,
     license="Apache-2.0",
     author="2GIS Test Labs",
     url="https://github.com/2gis-test-labs/easy_allure",
@@ -19,10 +22,13 @@ setuptools.setup(
     packages=['easy_allure'],
     entry_points={
         'console_scripts': [
-            'easy_allure = easy_allure.main:main'
+            'easy_allure = easy_allure.main:main',
+            'allurectl = easy_allure.allurectl:run_allurectl'
         ]
     },
-    package_data={'easy_allure': ['lib/*']},
+    package_data={'easy_allure': [
+        'bin/*'
+    ]},
     zip_safe=False,
     classifiers=[
         "License :: OSI Approved :: Apache Software License",
