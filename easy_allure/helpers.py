@@ -4,7 +4,7 @@ from typing import Tuple
 from urllib import request
 
 
-def run_cmd(cmd: str, timeout: int = 60) -> Tuple[str, str]:
+def run_cmd(cmd: str, timeout: int = 300) -> Tuple[str, str]:
     proc = subprocess.Popen(cmd,
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
