@@ -5,7 +5,8 @@ from .testops import get_available_actions
 from .allurectl import ALLURECTL_VERSION
 
 
-__version__ = '1.0.0_{}'.format(ALLURECTL_VERSION)
+allurectl_version = ALLURECTL_VERSION.replace('.', '')
+__version__ = '1.0.0.{}'.format(allurectl_version)
 
 
 def main():
