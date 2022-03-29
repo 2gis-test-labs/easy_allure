@@ -5,7 +5,7 @@ Package to facilitate work with allure testops
 ## Installation
 
 ```shell
-pip3 install git+https://github.com/2gis-test-labs/easy_allure.git
+pip3 install easy-allure
 ```
 To work with easy_allure, ENV variables for testops should be set in your working environment
 ```shell
