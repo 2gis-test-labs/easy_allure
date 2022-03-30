@@ -1,9 +1,8 @@
 import argparse
 import sys
 
-from .testops import get_available_actions
 from .allurectl import ALLURECTL_VERSION, check_allurectl
-
+from .testops import get_available_actions
 
 allurectl_version = ALLURECTL_VERSION.replace('.', '')
 __version__ = '1.0.0.{}'.format(allurectl_version)

@@ -1,4 +1,3 @@
-from asyncio import exceptions
 import os
 import shutil
 import subprocess
@@ -31,4 +30,3 @@ def download_file(file_url: str, dest_dir: str, dest_file_name: str,
         if not is_dir_exists:
             shutil.rmtree(dest_dir)
         raise err
-

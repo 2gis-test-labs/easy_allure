@@ -19,7 +19,7 @@ def create_launch(launch_name: str) -> str:
     launch_id = launch_id.strip()
     if not launch_id:
         raise ScriptException('Failed to receive launch id from allurectl, '
-                                         'empty launch_id received from allurectl')
+                              'empty launch_id received from allurectl')
 
     return launch_id
 

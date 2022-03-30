@@ -1,13 +1,12 @@
+import os
 import platform
 import subprocess
 import sys
-import os
 from typing import Callable
 
 import pkg_resources
 
 from .helpers import download_file
-
 
 ALLURECTL_VERSION = '1.21.2'
 
