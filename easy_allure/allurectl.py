@@ -40,6 +40,7 @@ def download_allurectl(dest_dir: str) -> None:
     file_url = 'https://github.com/allure-framework/allurectl/'\
                'releases/download/{}/{}'\
                .format(ALLURECTL_VERSION, executable_name)
+    print('Downloading allurectl from {}'.format(file_url))
     download_file(file_url, dest_dir, executable_name)
 
 
