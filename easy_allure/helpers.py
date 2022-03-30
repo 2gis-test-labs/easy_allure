@@ -28,7 +28,7 @@ def download_file(file_url: str, dest_dir: str, dest_file_name: str,
         request.urlretrieve(file_url, full_path)
         os.chmod(full_path, mode)
     except Exception as err:
-        raise err
-    finally:
         if not is_dir_exists:
             shutil.rmtree(dest_dir)
+        raise err
+
