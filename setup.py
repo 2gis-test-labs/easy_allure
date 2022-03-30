@@ -4,10 +4,8 @@
 import setuptools
 
 from easy_allure.main import __version__
-from easy_allure.allurectl import download_allurectl
 
 
-download_allurectl()
 setuptools.setup(
     name="easy_allure",
     description="Library for allure testops",

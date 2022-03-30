@@ -2,13 +2,14 @@ import argparse
 import sys
 
 from .testops import get_available_actions
-from .allurectl import ALLURECTL_VERSION
+from .allurectl import ALLURECTL_VERSION, check_allurectl
 
 
 allurectl_version = ALLURECTL_VERSION.replace('.', '')
 __version__ = '1.0.0.{}'.format(allurectl_version)
 
 
+@check_allurectl
 def main():
     print('Running easy_allure v{}'.format(__version__))
 
