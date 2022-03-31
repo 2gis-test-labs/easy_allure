@@ -18,5 +18,5 @@ export ALLURE_PROJECT_ID=ID_HERE
 
 Send test results to testops
 ```shell
-easy_allure send --reports-path ./allure_reports --launch-name my_launch
+easy_allure send ./allure_reports --launch-name my_launch
 ```
