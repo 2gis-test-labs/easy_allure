@@ -1,34 +1,60 @@
 import argparse
 import sys
+import logging
+import subprocess
+import sys
+import pkg_resources
 
-from .allurectl import ALLURECTL_VERSION, check_allurectl
-from .testops import get_available_actions
+from .allurectl import ALLURECTL_VERSION, get_platforms
+from .testops import AllureTestops, get_available_actions
+from .logger import get_logger, set_level
+from .allurectl import install_allurectl, get_allure_executable
+
 
 allurectl_version = ALLURECTL_VERSION.replace('.', '')
 __version__ = '1.0.1.{}'.format(allurectl_version)
 
+LOGGER = get_logger(__name__)
 
-@check_allurectl
+
+def get_default_parser(prog: str = None):
+    parser = argparse.ArgumentParser(prog=prog)
+    parser.add_argument('-p', '--platform', help='platform for allurectl execuatble binary',
+                        dest='platform', choices=['auto'] + get_platforms(), default='Linux.i386')
+    return parser
+
+
+def run_allurectl() -> None:
+    parser = get_default_parser()
+    parsed_args = parser.parse_args()
+
+    install_allurectl(parsed_args.platform)
+    command = [pkg_resources.resource_filename(
+        'easy_allure', '/bin/{}'.format(get_allure_executable()))]
+    command.extend(sys.argv[1:])
+    subprocess.call(command)
+
+
 def main():
-    print('Running easy_allure v{}'.format(__version__))
+    LOGGER.info('Running easy_allure v{}'.format(__version__))
 
-    parser = argparse.ArgumentParser(prog='easy_allure')
-    parser.add_argument('action')
+    actions = get_available_actions()
+    parser = get_default_parser(prog='easy_allure')
+    parser.add_argument('action', choices=actions.keys())
     parser.add_argument('reports_path')
     parser.add_argument('-l', '--launch-name', dest='launch_name',
                         default='default_launch_name')
+    parser.add_argument('-v', '--verbose', help='increase output verbosity',
+                        action='store_true')
     parsed_args = parser.parse_args()
+    if parsed_args.verbose:
+        set_level(logging.DEBUG)
 
-    actions = get_available_actions()
-    if parsed_args.action not in actions.keys():
-        print('<{}> action is not supported, plase select from {}'
-              .format(parsed_args.action, actions.keys()))
-        sys.exit(2)
-
+    testops_obj = AllureTestops(parsed_args.platform)
     try:
-        sys.exit(actions[parsed_args.action](parsed_args))
+        sys.exit(actions[parsed_args.action](testops_obj, parsed_args))
     except Exception as err:
-        print(err)
+        LOGGER.error(err)
         sys.exit(1)
 
 

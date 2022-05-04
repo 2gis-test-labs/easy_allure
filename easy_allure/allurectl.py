@@ -1,14 +1,15 @@
 import os
-import platform
-import subprocess
-import sys
-from typing import Callable
+
+from typing import Callable, List
 
 import pkg_resources
 
 from .helpers import download_file
+from .logger import get_logger
+
 
 ALLURECTL_VERSION = '1.21.2'
+LOGGER = get_logger(__name__)
 
 allure_executables = {
     'Darwin': {
@@ -26,36 +27,36 @@ allure_executables = {
 }
 
 
-def get_allure_executable() -> str:
+def get_allure_executable(platform: str) -> str:
+    platform = platform or 'auto'
+    
+    system = platform.system() if platform == 'auto' else platform.split('.')[0]
+    machine = platform.machine() if platform == 'auto' else platform.split('.')[1]
     try:
-        executable = allure_executables[platform.system()][platform.machine()]
+        executable = allure_executables[system][machine]
     except Exception:
         raise OSError('Failed to find executable for your platform')
     return executable
 
 
-def download_allurectl(dest_dir: str) -> None:
-    executable_name = get_allure_executable()
+def download_allurectl(dest_dir: str, platform: str = None) -> None:
+    executable_name = get_allure_executable(platform)
     file_url = 'https://github.com/allure-framework/allurectl/'\
                'releases/download/{}/{}'\
                .format(ALLURECTL_VERSION, executable_name)
-    print('Downloading allurectl from {}'.format(file_url))
+    LOGGER.info('Downloading allurectl from {}'.format(file_url))
     download_file(file_url, dest_dir, executable_name)
 
 
-def check_allurectl(func: Callable) -> Callable:
-    def install_allurectl() -> None:
-        bin_dir = pkg_resources.resource_filename('easy_allure', '/bin/')
-        if not os.path.exists(bin_dir):
-            download_allurectl(bin_dir)
-        return func()
-    return install_allurectl
+def install_allurectl(platform: str = None):
+    bin_dir = pkg_resources.resource_filename('easy_allure', '/bin/')
+    if not os.path.exists(os.path.join(bin_dir, get_allure_executable(platform))):
+        download_allurectl(bin_dir, platform)
 
 
-@check_allurectl
-def run_allurectl() -> None:
-    executable = get_allure_executable()
-    command = [pkg_resources.resource_filename('easy_allure',
-                                               '/bin/{}'.format(executable))]
-    command.extend(sys.argv[1:])
-    subprocess.call(command)
+def get_platforms() -> List:
+    platforms = []
+    for operation_sys, executables in allure_executables.items():
+        for platform in executables.keys():
+            platforms.append('{}.{}'.format(operation_sys, platform))
+    return platforms
