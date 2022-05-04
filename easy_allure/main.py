@@ -1,4 +1,5 @@
 import argparse
+from gzip import READ
 import sys
 import logging
 import subprocess
@@ -20,7 +21,8 @@ LOGGER = get_logger(__name__)
 def get_default_parser(prog: str = None):
     parser = argparse.ArgumentParser(prog=prog)
     parser.add_argument('-p', '--platform', help='platform for allurectl execuatble binary',
-                        dest='platform', choices=['auto'] + get_platforms(), default='Linux.i386')
+                        dest='platform', choices=['auto'] + get_platforms(),
+                        default='Linux.i386')
     return parser
 
 
@@ -30,8 +32,10 @@ def run_allurectl() -> None:
 
     install_allurectl(parsed_args.platform)
     command = [pkg_resources.resource_filename(
-        'easy_allure', '/bin/{}'.format(get_allure_executable()))]
+        'easy_allure', 
+        '/bin/{}'.format(get_allure_executable(parsed_args.platform)))]
     command.extend(sys.argv[1:])
+    LOGGER.debug(command)
     subprocess.call(command)
 
 

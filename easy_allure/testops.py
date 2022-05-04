@@ -14,12 +14,12 @@ LOGGER = get_logger(__name__)
 class AllureTestops():
     def __init__(self, platform: str = None) -> None:
         self.platform = platform
-        install_allurectl(self.platform)
-
+        self.executable = install_allurectl(self.platform)
+        
     def create_launch(self, launch_name: str) -> str:
-        cmd = 'allurectl launch create --launch-name {} ' \
+        cmd = '{} launch create --launch-name {} ' \
               '--no-header --format ID | tail -n1' \
-              .format(launch_name)
+              .format(self.executable, launch_name)
         try:
             launch_id, _ = run_cmd(cmd)
         except RuntimeError as err:
@@ -35,8 +35,8 @@ class AllureTestops():
 
 
     def upload_launch(self, reports_path: str, launch_id: str) -> None:
-        cmd = 'allurectl upload {} --launch-id {}' \
-            .format(reports_path, launch_id)
+        cmd = '{} upload {} --launch-id {}' \
+            .format(self.executable, reports_path, launch_id)
         try:
             run_cmd(cmd)
         except RuntimeError as err:
@@ -45,7 +45,7 @@ class AllureTestops():
 
 
     def close_launch(self, launch_id: str) -> None:
-        cmd = 'allurectl launch close {}'.format(launch_id)
+        cmd = '{} launch close {}'.format(self.executable, launch_id)
         try:
             run_cmd(cmd)
         except RuntimeError as err:

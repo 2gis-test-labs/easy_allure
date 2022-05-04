@@ -48,10 +48,12 @@ def download_allurectl(dest_dir: str, platform: str = None) -> None:
     download_file(file_url, dest_dir, executable_name)
 
 
-def install_allurectl(platform: str = None):
+def install_allurectl(platform: str = None) -> str:
     bin_dir = pkg_resources.resource_filename('easy_allure', '/bin/')
-    if not os.path.exists(os.path.join(bin_dir, get_allure_executable(platform))):
+    path = os.path.join(bin_dir, get_allure_executable(platform))
+    if not os.path.exists(path):
         download_allurectl(bin_dir, platform)
+    return path
 
 
 def get_platforms() -> List:
