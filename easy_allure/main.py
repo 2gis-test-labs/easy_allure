@@ -1,5 +1,4 @@
 import argparse
-from gzip import READ
 import sys
 import logging
 import subprocess
@@ -13,7 +12,7 @@ from .allurectl import install_allurectl, get_allure_executable
 
 
 allurectl_version = ALLURECTL_VERSION.replace('.', '')
-__version__ = '1.0.1.{}'.format(allurectl_version)
+__version__ = '1.1.0.{}'.format(allurectl_version)
 
 LOGGER = get_logger(__name__)
 
@@ -23,19 +22,25 @@ def get_default_parser(prog: str = None):
     parser.add_argument('-p', '--platform', help='platform for allurectl execuatble binary',
                         dest='platform', choices=['auto'] + get_platforms(),
                         default='Linux.i386')
+    parser.add_argument('-v', '--verbose', help='increase output verbosity',
+                        action='store_true')
     return parser
 
 
 def run_allurectl() -> None:
     parser = get_default_parser()
-    parsed_args = parser.parse_args()
+    parsed_args, unknown = parser.parse_known_args()
 
     install_allurectl(parsed_args.platform)
     command = [pkg_resources.resource_filename(
         'easy_allure', 
         '/bin/{}'.format(get_allure_executable(parsed_args.platform)))]
-    command.extend(sys.argv[1:])
-    LOGGER.debug(command)
+    
+    command.extend(unknown)
+    if parsed_args.verbose:
+        set_level(logging.DEBUG)
+        LOGGER.debug(command)
+
     subprocess.call(command)
 
 
@@ -48,8 +53,7 @@ def main():
     parser.add_argument('reports_path')
     parser.add_argument('-l', '--launch-name', dest='launch_name',
                         default='default_launch_name')
-    parser.add_argument('-v', '--verbose', help='increase output verbosity',
-                        action='store_true')
+    
     parsed_args = parser.parse_args()
     if parsed_args.verbose:
         set_level(logging.DEBUG)
