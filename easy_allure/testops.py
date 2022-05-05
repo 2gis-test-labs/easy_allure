@@ -18,7 +18,7 @@ class AllureTestops():
         
     def create_launch(self, launch_name: str) -> str:
         cmd = '{} launch create --launch-name {} ' \
-              '--no-header --format ID | tail -n1' \
+              '--no-header --format ID' \
               .format(self.executable, launch_name)
         try:
             launch_id, _ = run_cmd(cmd)
