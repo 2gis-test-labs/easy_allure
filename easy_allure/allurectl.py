@@ -1,12 +1,10 @@
 import os
-
-from typing import Callable, List
+from typing import List
 
 import pkg_resources
 
 from .helpers import download_file
 from .logger import get_logger
-
 
 ALLURECTL_VERSION = '1.21.2'
 LOGGER = get_logger(__name__)
@@ -29,9 +27,11 @@ allure_executables = {
 
 def get_allure_executable(platform: str) -> str:
     platform = platform or 'auto'
-    
-    system = platform.system() if platform == 'auto' else platform.split('.')[0]
-    machine = platform.machine() if platform == 'auto' else platform.split('.')[1]
+
+    system = platform.system() if platform == 'auto' \
+        else platform.split('.')[0]
+    machine = platform.machine() if platform == 'auto' \
+        else platform.split('.')[1]
     try:
         executable = allure_executables[system][machine]
     except Exception:

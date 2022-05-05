@@ -2,11 +2,10 @@ import argparse
 import os
 from typing import Dict
 
+from .allurectl import install_allurectl
 from .exceptions import ScriptException
 from .helpers import run_cmd
 from .logger import get_logger
-from .allurectl import install_allurectl
-
 
 LOGGER = get_logger(__name__)
 
@@ -15,7 +14,7 @@ class AllureTestops():
     def __init__(self, platform: str = None) -> None:
         self.platform = platform
         self.executable = install_allurectl(self.platform)
-        
+
     def create_launch(self, launch_name: str) -> str:
         cmd = '{} launch create --launch-name {} ' \
               '--no-header --format ID' \
@@ -28,11 +27,11 @@ class AllureTestops():
 
         launch_id = launch_id.strip()
         if not launch_id:
-            raise ScriptException('Failed to receive launch id from allurectl, '
-                                  'empty launch_id received from allurectl')
+            errMessage = 'Failed to receive launch id from allurectl, ' \
+                         'empty launch_id received from allurectl'
+            raise ScriptException(errMessage)
 
         return launch_id
-
 
     def upload_launch(self, reports_path: str, launch_id: str) -> None:
         cmd = '{} upload {} --launch-id {}' \
@@ -42,7 +41,6 @@ class AllureTestops():
         except RuntimeError as err:
             errMessage = 'Failed to upload launch: {}'.format(err)
             raise ScriptException(errMessage)
-
 
     def close_launch(self, launch_id: str) -> None:
         cmd = '{} launch close {}'.format(self.executable, launch_id)
