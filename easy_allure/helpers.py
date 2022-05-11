@@ -6,7 +6,7 @@ from urllib import request
 
 from .logger import get_logger
 
-LOGGER = get_logger(__name__)
+LOGGER = get_logger()
 
 
 def run_cmd(cmd: str, timeout: int = 300) -> Tuple[str, str]:

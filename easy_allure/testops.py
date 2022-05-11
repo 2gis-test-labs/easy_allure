@@ -7,7 +7,7 @@ from .exceptions import ScriptException
 from .helpers import run_cmd
 from .logger import get_logger
 
-LOGGER = get_logger(__name__)
+LOGGER = get_logger()
 
 
 class AllureTestops():

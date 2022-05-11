@@ -13,7 +13,7 @@ from .testops import AllureTestops, get_available_actions
 allurectl_version = ALLURECTL_VERSION.replace('.', '')
 __version__ = '1.1.0.{}'.format(allurectl_version)
 
-LOGGER = get_logger(__name__)
+LOGGER = get_logger()
 
 
 def get_default_parser(prog: str = None):
