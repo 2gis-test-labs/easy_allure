@@ -20,7 +20,7 @@ setuptools.setup(
     entry_points={
         'console_scripts': [
             'easy_allure = easy_allure.main:main',
-            'allurectl = easy_allure.allurectl:run_allurectl'
+            'allurectl = easy_allure.main:run_allurectl'
         ]
     },
     package_data={'easy_allure': [

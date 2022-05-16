@@ -4,14 +4,22 @@ import subprocess
 from typing import Tuple
 from urllib import request
 
+from .logger import get_logger
+
+LOGGER = get_logger()
+
 
 def run_cmd(cmd: str, timeout: int = 300) -> Tuple[str, str]:
+    LOGGER.debug('CMD: {}'.format(cmd))
     proc = subprocess.Popen(cmd,
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE,
                             universal_newlines=True,
                             shell=True)
     stdout, stderr = proc.communicate(timeout=timeout)
+    LOGGER.debug('stdout: {}'.format(stdout))
+    LOGGER.debug('stderr: {}'.format(stderr))
+    LOGGER.debug('rc: {}'.format(proc.returncode))
     if proc.returncode != 0:
         raise RuntimeError('Failed to run <{}>, got {}'.format(cmd, stderr))
     return stdout, stderr
