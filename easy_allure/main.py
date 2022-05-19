@@ -52,10 +52,14 @@ def main():
 
     actions = get_available_actions()
     parser = get_default_parser(prog='easy_allure')
+
     parser.add_argument('action', choices=actions.keys())
     parser.add_argument('reports_path')
     parser.add_argument('-l', '--launch-name', dest='launch_name',
                         default='default_launch_name')
+    parser.add_argument('--close', action='store_true',
+                        dest='close_launch',
+                        help='close launch right after upload')
 
     parsed_args = parser.parse_args()
     if parsed_args.verbose:
