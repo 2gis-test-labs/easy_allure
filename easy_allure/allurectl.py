@@ -48,7 +48,7 @@ def download_allurectl(dest_dir: str, platform_name: str = None) -> None:
     file_url = 'https://github.com/allure-framework/allurectl/'\
                'releases/download/{}/{}'\
                .format(ALLURECTL_VERSION, executable_name)
-    LOGGER.info('Downloading allurectl from {}'.format(file_url))
+    LOGGER.debug('Downloading allurectl from {}'.format(file_url))
     download_file(file_url, dest_dir, executable_name)
 
 
