@@ -54,7 +54,6 @@ class AllureTestops():
 def send_to_testops(testops_obj, parsed_args: argparse.Namespace) -> int:
     launch_id = testops_obj.create_launch(parsed_args.launch_name)
     testops_obj.upload_launch(parsed_args.reports_path, launch_id)
-    testops_obj.close_launch(launch_id)
 
     allure_endpoint = os.environ.get('ALLURE_ENDPOINT')
     LOGGER.info('Test run was successfully pushed to {}/launch/{}'

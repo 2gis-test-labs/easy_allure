@@ -52,6 +52,7 @@ def main():
 
     actions = get_available_actions()
     parser = get_default_parser(prog='easy_allure')
+
     parser.add_argument('action', choices=actions.keys())
     parser.add_argument('reports_path')
     parser.add_argument('-l', '--launch-name', dest='launch_name',
