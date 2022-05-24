@@ -11,7 +11,7 @@ from .logger import get_logger, set_level
 from .testops import AllureTestops, get_available_actions
 
 allurectl_version = ALLURECTL_VERSION.replace('.', '')
-__version__ = '1.1.0.{}'.format(allurectl_version)
+__version__ = '1.2.0.{}'.format(allurectl_version)
 
 LOGGER = get_logger()
 
