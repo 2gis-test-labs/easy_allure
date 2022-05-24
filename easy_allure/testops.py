@@ -1,6 +1,5 @@
 import argparse
 import os
-import time
 from typing import Dict
 
 from .allurectl import install_allurectl
@@ -52,12 +51,9 @@ class AllureTestops():
             raise ScriptException(errMessage)
 
 
-def send_to_testops(testops_obj, parsed_args: argparse.Namespace, pause_time: int = 60) -> int:
+def send_to_testops(testops_obj, parsed_args: argparse.Namespace) -> int:
     launch_id = testops_obj.create_launch(parsed_args.launch_name)
     testops_obj.upload_launch(parsed_args.reports_path, launch_id)
-    if parsed_args.close_launch:
-        time.sleep(pause_time)
-        testops_obj.close_launch(launch_id)
 
     allure_endpoint = os.environ.get('ALLURE_ENDPOINT')
     LOGGER.info('Test run was successfully pushed to {}/launch/{}'
